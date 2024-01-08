@@ -1,0 +1,7 @@
+alunos(nprocesso<pk>,nome,morada,cp,data_nasc,email)
+disciplinas(codigo<pk>,nome,ano,nr_modulos,nr_horas,max_faltas)
+notas(codigo<pk>,codigo_disciplina<fk>,nprocesso<fk>,nota,data_nota,modulo,ano)
+
+Funcionalidades
+    CRUD - alunos, disciplinas e notas
+    Pesquisar (like) - alunos
