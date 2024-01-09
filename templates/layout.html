@@ -21,16 +21,21 @@
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="/aluno/adicionar">Adicionar Aluno</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/aluno/listar">Lista de Alunos</a>
               </li>
             </ul>
           </div>
         </div>
       </nav>
     <!--Navbar-->
-    {% block body %}
-    {% endblock %}
-    <!--Rodapé-->
+    <div class="container">
+      {% block body %}
+      {% endblock %}
+    </div>
+      <!--Rodapé-->
     <footer>
         {% if not request.cookies.get("aviso") %}
         <form method="post" action="/aceitar_cookies">
