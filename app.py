@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS Alunos(
 )
 """
 basedados.executar_sql(ligacao_bd,comando_cria_tabela_alunos)
+#disciplinas(codigo<pk>,nome,ano,nr_modulos,nr_horas,max_faltas)
 
 app = Flask(__name__)
 
@@ -34,24 +35,29 @@ def aceitar_cookies():
 
 @app.route('/aluno/adicionar',methods=["GET","POST"])
 def aluno_adicionar():
-    return aluno.aluno_adicionar()  #TODO: corrigir o return
+    return aluno.aluno_adicionar()
 
 @app.route('/aluno/listar')
 def aluno_listar():
-    ligacao_bd = basedados.criar_conexao("notas.bd")
-    sql = "SELECT * FROM Alunos"
-    dados = basedados.consultar_sql(ligacao_bd,sql)
-    return render_template('aluno/listar.html',registos = dados)
+    return aluno.aluno_listar()
 
-#TODO: pesquisar alunos com base no nome
+#TODO: pesquisar alunos com base no nome => opção para ver notas
 
-@app.route('/aluno/editar')
-def aluno_editar():
-    pass
-
-@app.route('/aluno/apagar')
+@app.route('/aluno/apagar',methods=["POST"])
 def aluno_apagar():
-    pass
+    return aluno.aluno_apagar()
+
+@app.route('/aluno/apagar_confirmado',methods=["POST"])
+def aluno_apagar_confirmado():
+    return aluno.aluno_apagar_confirmado()
+
+@app.route('/aluno/editar',methods=["POST"])
+def aluno_editar():
+    return aluno.aluno_editar()
+
+@app.route('/aluno/editar_confirmado',methods=["POST"])
+def aluno_editar_confirmado():
+    return aluno.aluno_editar_confirmado()
 
 if __name__ == "__main__":
     app.run(debug=True)
