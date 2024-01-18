@@ -65,13 +65,19 @@ def aluno_editar():
 
 def aluno_editar_confirmado():
     ligacao_bd = basedados.criar_conexao("notas.bd")
+    nprocesso = request.form.get("nprocesso")
+    #consulta à bd para recolher os dados aluno selecionado
+    sql = "SELECT * FROM Alunos WHERE nprocesso=?"
+    parametros=(nprocesso,)
+    #executar a consulta
+    dados =  basedados.consultar_sql(ligacao_bd,sql,parametros)
     if request.method=="POST":
         #validar os dados
         nome = request.form.get("input_nome")
         if not nome:
-            return render_template('aluno/editar.html',mensagem="Tem de preencher o campo do nome")
+            return render_template('aluno/editar.html',registo=dados[0],mensagem="Tem de preencher o campo do nome")
         if len(nome)<3:
-            return render_template('aluno/editar.html',mensagem="Nome muito pequeno. Deve ter pelo menos 3 letras")
+            return render_template('aluno/editar.html',registo=dados[0],mensagem="Nome muito pequeno. Deve ter pelo menos 3 letras")
         morada = request.form.get("input_morada")
         cp = request.form.get("input_cp")
         data_nasc = request.form.get("input_data")
