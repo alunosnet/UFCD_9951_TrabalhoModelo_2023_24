@@ -2,35 +2,8 @@ from flask import Flask, render_template, request, make_response, redirect
 import basedados
 import aluno
 import disciplina
-
-#Criar a base de dados e as tabelas
-ligacao_bd=basedados.criar_conexao("notas.bd")
-
-#alunos(nprocesso<pk>,nome,morada,cp,data_nasc,email)
-comando_cria_tabela_alunos="""
-CREATE TABLE IF NOT EXISTS Alunos(
-    nprocesso INTEGER PRIMARY KEY,
-    nome TEXT NOT NULL CHECK(length(nome)>=3),
-    morada TEXT,
-    cp TEXT,
-    data_nasc NUMERIC,
-    email TEXT NOT NULL CHECK(email LIKE '%@%.%')
-)
-"""
-basedados.executar_sql(ligacao_bd,comando_cria_tabela_alunos)
-#disciplinas(codigo<pk>,nome,ano,nr_modulos,nr_horas,max_faltas)
-
-comando_cria_tabela_disciplinas="""
-CREATE TABLE IF NOT EXISTS Disciplinas(
-    codigo INTEGER PRIMARY KEY,
-    nome TEXT NOT NULL,
-    ano INTEGER CHECK (ano>0),
-    nr_modulos INTEGER CHECK (nr_modulos>0),
-    nr_horas INTEGER CHECK (nr_horas>0),
-    max_faltas INTEGER CHECK (max_faltas)
-)
-"""
-basedados.executar_sql(ligacao_bd,comando_cria_tabela_disciplinas)
+import tabelas
+import nota
 
 app = Flask(__name__)
 
@@ -99,6 +72,11 @@ def disciplina_editar():
 def disciplina_editar_confirmado():
     return disciplina.disciplina_editar_confirmado()
 
+#Rotas das notas
+################################################################
+@app.route('/nota/adicionar',methods=["GET","POST"])
+def nota_adicionar():
+    return nota.nota_adicionar()
 
 if __name__ == "__main__":
     app.run(debug=True)
