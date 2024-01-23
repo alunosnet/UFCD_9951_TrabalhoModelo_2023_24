@@ -2,7 +2,7 @@
 {% block body %}
 <h1>Adicionar aluno</h1>
 
-<form method="post" action="/aluno/adicionar" enctype="multipart/form-data">
+<form method="post" action="/aluno/adicionar">
     <label for="input_nome">Nome:</label>
     <input type="text" name="input_nome" id="input_nome" required class="form-control" />
     <br>
@@ -18,8 +18,6 @@
     <label for="input_email">Email:</label>
     <input type="email" name="input_email" id="input_email" required class="form-control" />
     <br>
-    <label for="input_fotografia">Fotografia:</label>
-    <input type="file" name="input_fotografia" id="input_fotografia" class="form-control" />
     <input type="submit" value="Adicionar" class="btn btn-lg btn-danger"/>
     <br>
     {{ mensagem }}

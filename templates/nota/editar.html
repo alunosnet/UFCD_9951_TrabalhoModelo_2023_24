@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1>Adicionar nota</h1>
+<h1>Editar nota</h1>
 
-<form method="post" action="/nota/adicionar">
-
+<form method="post" action="/nota/editar_confirmado">
+    <input type="hidden" value="{{registo['codigo']}}" name="codigo">
     <label for="nprocesso">Nome aluno:</label>
     <select name="nprocesso" class="form-select">
         {% for aluno in alunos %}
@@ -19,18 +19,18 @@
     </select>
     <br>
     <label for="input_nota">Nota:</label>
-    <input type="number" name="input_nota" id="input_nota" class="form-control" />
+    <input value="{{ registo['nota'] }}" type="number" name="input_nota" id="input_nota" class="form-control" />
     <br>
     <label for="input_data">Data Nota:</label>
-    <input type="date" name="input_data" id="input_data" required class="form-control" />
+    <input value="{{ registo['data_nota'] }}" type="date" name="input_data" id="input_data" required class="form-control" />
     <br>
     <label for="input_modulo">Módulo:</label>
-    <input type="number" name="input_modulo" id="input_modulo" required class="form-control" />
+    <input value="{{ registo['modulo'] }}" type="number" name="input_modulo" id="input_modulo" required class="form-control" />
     <br>
     <label for="input_ano">Ano:</label>
-    <input type="number" name="input_ano" id="input_ano" required class="form-control" />
+    <input value="{{ registo['ano'] }}" type="number" name="input_ano" id="input_ano" required class="form-control" />
     <br>
-    <input type="submit" value="Adicionar" class="btn btn-lg btn-danger"/>
+    <input type="submit" value="Atualizar" class="btn btn-lg btn-danger"/>
     <br>
     {{ mensagem }}
 </form>

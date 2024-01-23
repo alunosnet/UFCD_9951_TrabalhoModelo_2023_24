@@ -28,7 +28,9 @@ def aluno_adicionar():
 def aluno_listar():
     return aluno.aluno_listar()
 
-#TODO: pesquisar alunos com base no nome => opção para ver notas
+@app.route('/aluno/pesquisar',methods=["GET","POST"])
+def aluno_pesquisar():
+    return aluno.aluno_pesquisar()
 
 @app.route('/aluno/apagar',methods=["POST"])
 def aluno_apagar():
@@ -45,6 +47,9 @@ def aluno_editar():
 @app.route('/aluno/editar_confirmado',methods=["POST"])
 def aluno_editar_confirmado():
     return aluno.aluno_editar_confirmado()
+
+#rota com query string
+@app.route('/aluno/notas/<nprocesso>')
 
 #Rotas das disciplinas
 #################################################################
@@ -77,6 +82,26 @@ def disciplina_editar_confirmado():
 @app.route('/nota/adicionar',methods=["GET","POST"])
 def nota_adicionar():
     return nota.nota_adicionar()
+
+@app.route("/nota/listar")
+def nota_listar():
+    return nota.nota_listar()
+
+@app.route('/nota/apagar',methods=["POST"])
+def nota_apagar():
+    return nota.nota_apagar()
+
+@app.route('/nota/apagar_confirmado',methods=["POST"])
+def nota_apagar_confirmado():
+    return nota.nota_apagar_confirmado()
+
+@app.route('/nota/editar',methods=["POST"])
+def nota_editar():
+    return nota.nota_editar()
+
+@app.route('/nota/editar_confirmado',methods=["POST"])
+def nota_editar_confirmado():
+    return nota.nota_editar_confirmado()
 
 if __name__ == "__main__":
     app.run(debug=True)

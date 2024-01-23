@@ -17,7 +17,6 @@ def aluno_adicionar():
         cp = request.form.get("input_cp")
         data_nasc = request.form.get("input_data")
         email = request.form.get("input_email")
-        #TODO: guardar fotografia e fazer mais validações
         #adicionar à bd
         sql = "INSERT INTO Alunos(nome,morada,cp,data_nasc,email) VALUES (?,?,?,?,?)"
         parametros = (nome,morada,cp,data_nasc,email)
@@ -83,9 +82,20 @@ def aluno_editar_confirmado():
         data_nasc = request.form.get("input_data")
         email = request.form.get("input_email")
         nprocesso = request.form.get("nprocesso")
-        #TODO: guardar fotografia e fazer mais validações
         #editar o aluno na bd
         sql = "UPDATE Alunos SET nome=?, morada=?, cp=?, data_nasc=?, email=? WHERE nprocesso=?"
         parametros = (nome,morada,cp,data_nasc,email,nprocesso)
         basedados.executar_sql(ligacao_bd,sql,parametros)
         return redirect("/aluno/listar")
+    
+def aluno_pesquisar():
+    ligacao_bd = basedados.criar_conexao("notas.bd")
+    if request.method=="GET":
+        return render_template('aluno/pesquisar.html')
+    if request.method=="POST":
+        nome=request.form.get("nome")
+        sql="SELECT * FROM ALUNOS WHERE nome like ?"
+        nome = '%' + nome + '%'
+        parametros=(nome,)
+        dados=basedados.consultar_sql(ligacao_bd,sql,parametros)
+        return render_template('aluno/pesquisar.html',registos=dados)
