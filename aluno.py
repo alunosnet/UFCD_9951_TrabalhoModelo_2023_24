@@ -99,3 +99,16 @@ def aluno_pesquisar():
         parametros=(nome,)
         dados=basedados.consultar_sql(ligacao_bd,sql,parametros)
         return render_template('aluno/pesquisar.html',registos=dados)
+
+def aluno_listar_notas(nprocesso):
+    ligacao_bd = basedados.criar_conexao("notas.bd")
+    #consulta à tabela dos alunos
+    sql = "SELECT * FROM Alunos WHERE nprocesso=?"
+    parametros=(nprocesso,)
+    aluno = basedados.consultar_sql(ligacao_bd,sql,parametros)
+    #consulta à tabela das notas
+    sql = """SELECT Notas.*,Disciplinas.nome as NomeDisciplina FROM Notas 
+            INNER JOIN Disciplinas ON Notas.codigo_disciplina=Disciplinas.codigo
+            WHERE Notas.nprocesso=?"""
+    notas = basedados.consultar_sql(ligacao_bd,sql,parametros)
+    return render_template("aluno/notas.html",aluno=aluno[0],notas=notas)

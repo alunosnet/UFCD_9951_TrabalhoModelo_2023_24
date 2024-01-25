@@ -49,7 +49,9 @@ def aluno_editar_confirmado():
     return aluno.aluno_editar_confirmado()
 
 #rota com query string
-@app.route('/aluno/notas/<nprocesso>')
+@app.route('/aluno/listar_notas/<nprocesso>')
+def aluno_listar_notas(nprocesso):
+    return aluno.aluno_listar_notas(nprocesso)
 
 #Rotas das disciplinas
 #################################################################
@@ -102,6 +104,12 @@ def nota_editar():
 @app.route('/nota/editar_confirmado',methods=["POST"])
 def nota_editar_confirmado():
     return nota.nota_editar_confirmado()
+
+#Rotas de erros
+#################################################################
+@app.errorhandler(404)
+def erro_404(evento):
+    return render_template("404.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

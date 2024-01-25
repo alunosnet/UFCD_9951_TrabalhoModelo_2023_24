@@ -34,7 +34,13 @@ def nota_listar():
     ORDER BY Notas.nprocesso,Notas.ano
     """
     dados = basedados.consultar_sql(ligacao_bd,sql)
-    return render_template('nota/listar.html',registos = dados)
+    #######################################Consulta com group by e avg
+    sql = """SELECT Alunos.nome as NomeAluno,avg(nota) as media 
+            FROM Notas INNER JOIN Alunos 
+            ON Notas.nprocesso=Alunos.nprocesso
+            GROUP BY Notas.nprocesso,Alunos.nome"""
+    medias = basedados.consultar_sql(ligacao_bd,sql)
+    return render_template('nota/listar.html',registos = dados,medias=medias)
 
 def nota_apagar():
     #codigo

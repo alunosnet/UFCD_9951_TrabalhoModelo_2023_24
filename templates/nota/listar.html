@@ -1,6 +1,19 @@
 {% extends "layout.html" %}
 {% block body %}
 
+<h1>Média por aluno</h1>
+<table class="table">
+    <tr>
+        <th>Nome</th>
+        <th>Média</th>
+    </tr>
+    {% for registo in medias %}
+    <tr>
+        <th>{{ registo['NomeAluno'] }}</th>
+        <th>{{ registo['media'] }}</th>
+    </tr>
+    {% endfor %}
+</table>
 <h1>Lista de notas</h1>
 <table class="table">
     <tr>
