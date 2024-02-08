@@ -41,12 +41,20 @@ def aluno_apagar():
     return render_template("aluno/apagar.html",registo = dados[0])
 
 def aluno_apagar_confirmado():
+    ligacao_bd = basedados.criar_conexao("notas.bd")
     #nprocesso
     nprocesso = request.form.get("nprocesso")
+    #verificar se o aluno tem notas
+    sql="SELECT * FROM Notas WHERE Nprocesso=?"
+    parametros=(nprocesso,)
+    dados=basedados.consultar_sql(ligacao_bd,sql,parametros)
+    if dados is not None and len(dados)>0:
+        print("Este aluno não pode ser removido porque tem notas")
+        return redirect("/aluno/listar")
     print(nprocesso)
     sql = "DELETE FROM Alunos WHERE nprocesso=?"
     parametros=(nprocesso,)
-    ligacao_bd = basedados.criar_conexao("notas.bd")
+
     basedados.executar_sql(ligacao_bd,sql,parametros)
     #redirecionar para a pagina de listar alunos
     return redirect("/aluno/listar")

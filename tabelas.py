@@ -3,6 +3,9 @@ import basedados
 #Criar a base de dados e as tabelas
 ligacao_bd=basedados.criar_conexao("notas.bd")
 
+ativa_referencia_integridade="PRAGMA foreign_keys=ON"
+basedados.executar_sql(ligacao_bd,ativa_referencia_integridade)
+
 #alunos(nprocesso<pk>,nome,morada,cp,data_nasc,email)
 comando_cria_tabela_alunos="""
 CREATE TABLE IF NOT EXISTS Alunos(
@@ -33,8 +36,10 @@ basedados.executar_sql(ligacao_bd,comando_cria_tabela_disciplinas)
 comando_cria_tabela_notas="""
 CREATE TABLE IF NOT EXISTS Notas(
     codigo INTEGER PRIMARY KEY,
-    codigo_disciplina INTEGER REFERENCES Disciplinas(codigo),
-    nprocesso INTEGER REFERENCES Alunos(nprocesso),
+    codigo_disciplina INTEGER REFERENCES Disciplinas(codigo)
+    on delete cascade,
+    nprocesso INTEGER REFERENCES Alunos(nprocesso)
+    on delete cascade,
     nota INTEGER NOT NULL CHECK (nota>=0 AND nota<=20),
     data_nota NUMERIC NOT NULL,
     modulo INTEGER NOT NULL CHECK (modulo>0),
